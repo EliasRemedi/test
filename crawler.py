@@ -22,6 +22,8 @@ class Crawler:
             This method uses requests to find the url o each product, call the method to extract the information and then
             saves it.
         """
+        self.save_db()
+
         headers = {
             "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"
         }
@@ -45,8 +47,17 @@ class Crawler:
                         # if with get the product information, saves it.
                         self.__saver.save(result_dict)
                         print("saved")
-
             self.__logger.info(f"{datetime.now().strftime('%d/%m/%Y-%H:%M:%S')}-----crawler ended successfully-----")
 
         except Exception as e:
             self.__logger.error(f"fallo crawler {e}")
+
+    def save_db(self):
+        
+        import pymysql
+        
+        db = pymysql.connect(host = 'as-db.clfheeawc0hd.us-east-2.rds.amazonaws.com',user = 'admin',password = 'AutoScraping2019',port = 3306)
+        cursor = db.cursor()
+        cursor.execute('INSERT INTO test.test (text) values ("coso de amazon");')
+        db.commit()
+        db.close()
