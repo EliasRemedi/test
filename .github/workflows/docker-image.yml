@@ -21,8 +21,5 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       -
         name: Build and push
-        uses: docker/build-push-action@v3
-        with:
-          push: true
-          tags: yo
-        
+        run: docker build -t ${{ GITHUB_ACTION_REPOSITORY }} -t ${{ GITHUB_ACTION_REPOSITORY }}:${{ GITHUB_RUN_NUMBER }} .
+           - docker push --all-tags ${{ GITHUB_ACTION_REPOSITORY }}
