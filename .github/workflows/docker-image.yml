@@ -36,6 +36,6 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
-          load: true
-          tags: test
-          labels: test
+          tag_with_ref: true
+          tag_with_sha: true
+          tags: ${{ github.sha }}
