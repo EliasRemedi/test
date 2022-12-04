@@ -29,24 +29,24 @@ class Crawler:
         }
         self.__logger.info(f"{datetime.now().strftime('%d/%m/%Y-%H:%M:%S')}-----init crawler inna-mageplaza-----")
         try:
-            # main url
-            url = self.__ConfigDict['url']
-            response = requests.get(url, headers=headers)
-            html_text = response.text
-            # find the products urls
-            products_href = re.findall(self.__ConfigDict['products'], html_text)
-            if products_href:
-                self.__logger.info(f"{datetime.now().strftime('%d/%m/%Y-%H:%M:%S')}-----scraping products-----")
-                for prod_href in products_href:
-                    url = prod_href
-                    response = requests.get(url, headers=headers)
-                    prod_html = response.text
-                    # call the create_dic method to extract the product information
-                    result_dict = self.__scraper.create_dic(prod_html, url)
-                    if result_dict:
-                        # if with get the product information, saves it.
-                        self.__saver.save(result_dict)
-                        print("saved")
+            # # main url
+            # url = self.__ConfigDict['url']
+            # response = requests.get(url, headers=headers)
+            # html_text = response.text
+            # # find the products urls
+            # products_href = re.findall(self.__ConfigDict['products'], html_text)
+            # if products_href:
+            #     self.__logger.info(f"{datetime.now().strftime('%d/%m/%Y-%H:%M:%S')}-----scraping products-----")
+            #     for prod_href in products_href:
+            #         url = prod_href
+            #         response = requests.get(url, headers=headers)
+            #         prod_html = response.text
+            #         # call the create_dic method to extract the product information
+            #         result_dict = self.__scraper.create_dic(prod_html, url)
+            #         if result_dict:
+            #             # if with get the product information, saves it.
+            #             self.__saver.save(result_dict)
+            #             print("saved")
             self.__logger.info(f"{datetime.now().strftime('%d/%m/%Y-%H:%M:%S')}-----crawler ended successfully-----")
 
         except Exception as e:
@@ -55,9 +55,10 @@ class Crawler:
     def save_db(self):
         
         import pymysql
-        
+        self.__logger.info(f"{datetime.now().strftime('%d/%m/%Y-%H:%M:%S')}-----saving in db-----")
         db = pymysql.connect(host = 'as-db.clfheeawc0hd.us-east-2.rds.amazonaws.com',user = 'admin',password = 'AutoScraping2019',port = 3306)
         cursor = db.cursor()
-        cursor.execute('INSERT INTO test.test (text) values ("coso de amazon");')
+        cursor.execute(f'INSERT INTO test.test (text) values ("{datetime.now()} amazon");')
         db.commit()
         db.close()
+        self.__logger.info(f"{datetime.now().strftime('%d/%m/%Y-%H:%M:%S')}-----saved-----")
