@@ -22,4 +22,3 @@ jobs:
       -
         name: Build and push
         run: docker build -t test -t test:$GITHUB_RUN_NUMBER .
-           - docker push --all-tags test
