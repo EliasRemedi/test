@@ -22,5 +22,3 @@ jobs:
       -
         name: Build and push
         run: echo "docker build -t $GITHUB_ACTION_REPOSITORY -t $GITHUB_ACTION_REPOSITORY:$GITHUB_RUN_NUMBER ."
-           - docker build -t $GITHUB_ACTION_REPOSITORY:$GITHUB_RUN_NUMBER .
-           - docker push --all-tags $GITHUB_ACTION_REPOSITORY
