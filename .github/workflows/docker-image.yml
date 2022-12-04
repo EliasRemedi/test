@@ -21,4 +21,5 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       -
         name: Build and push
-        run: echo "asd docker build -t $GITHUB_REPOSITORY -t $GITHUB_REPOSITORY:$GITHUB_RUN_NUMBER ."
+        run: docker build -t $GITHUB_REPOSITORY -t $GITHUB_REPOSITORY:$GITHUB_RUN_NUMBER .
+           - docker push --all-tags $GITHUB_REPOSITORY
