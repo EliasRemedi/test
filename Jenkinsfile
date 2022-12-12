@@ -45,10 +45,5 @@ pipeline {
 
       }
     }
-
-  }
-  environment {
-    dockerimagename = 'eliasremedi/test-ayi'
-    dockerImage = ''
   }
 }
