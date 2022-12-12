@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+    name: testing
+spec:
+    schedule: "* * 31 2 *"
+    jobTemplate:
+        spec:
+            template:
+                spec:
+                    containers:
+                    -   name: test
+                        image: autoscraping/test:latest
+                    imagePullSecrets:
+                    - name: as-regcred
+                    restartPolicy: OnFailure
