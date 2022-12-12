@@ -1,5 +1,12 @@
 pipeline {
+
+  environment {
+    dockerimagename = "thetips4you/nodeapp"
+    dockerImage = ""
+  }
+  
   agent any
+  
   stages {
     stage('Checkout Source') {
       steps {
