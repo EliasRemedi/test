@@ -30,13 +30,7 @@ pipeline {
                                   cpu: 20m 
                                   memory: 512Mi 
                           securityContext: 
-                              privileged: true 
-                          volumeMounts: 
-                            - name: docker-graph-storage 
-                              mountPath: /var/lib/docker 
-                      volumes: 
-                        - name: docker-graph-storage 
-                          emptyDir: {}'''
+                              privileged: true '''
     }
   }
   
