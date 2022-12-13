@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v3
       - run: |
           sudo apt install gettext
-          envsubst < config.ini > config.ini
+          envsubst < config.ini-template > config.ini
           cat config.ini
           docker build -t $IMAGE_NAME:latest .
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
