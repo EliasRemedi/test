@@ -7,9 +7,7 @@ on:
     branches: [ "master" ]
   
 env:
-  DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-  KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-  IMAGE_NAME: ayi-githubactions:latest
+  IMAGE_NAME: ayi-githubactions
 
 jobs:
   
@@ -22,10 +20,10 @@ jobs:
       - name: build and push image
         uses: actions/checkout@v3
       - run: |
-          docker build -t test:latest .
+          docker build -t $IMAGE_NAME:latest .
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-          docker tag test autoscraping/test:latest
-          docker push autoscraping/test:latest
+          docker tag $IMAGE_NAME ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:latest
           
                  
   deploy-to-cluster:
