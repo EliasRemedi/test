@@ -28,7 +28,7 @@ class Crawler:
 
             #save in DB
             self.__logger.info(f"{datetime.now().strftime('%d/%m/%Y-%H:%M:%S')}-----saving in db-----")
-            db = pymysql.connect(host=self.__ConfigDict['db_host'], user=self.__ConfigDict['db_user'], password=self.__ConfigDict['db_password'], port=self.__ConfigDict['db_port'])
+            db = pymysql.connect(host=self.__ConfigDict['db_host'], user=self.__ConfigDict['db_user'], password=self.__ConfigDict['db_password'], port=int(self.__ConfigDict['db_port']))
             cursor = db.cursor()
             cursor.execute(f'INSERT INTO test.test (text) values ("{date_weather}");')
             db.commit()
