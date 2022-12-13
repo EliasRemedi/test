@@ -8,6 +8,7 @@ on:
   
 env:
   IMAGE_NAME: ayi-githubactions
+  DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
 
 jobs:
   
@@ -20,6 +21,9 @@ jobs:
       - name: build and push image
         uses: actions/checkout@v3
       - run: |
+          sudo apt install gettext
+          envsubst < config.ini > config.ini
+          cat config.ini
           docker build -t $IMAGE_NAME:latest .
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
           docker tag $IMAGE_NAME ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:latest
