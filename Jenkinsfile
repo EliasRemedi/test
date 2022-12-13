@@ -46,10 +46,10 @@ spec:
       }
     }
 
-    stage('Build image') {
-      steps{
-        script {
-          dockerImage = docker.build dockerimagename
+    stage('Build-Docker-Image') {
+      steps {
+        container('docker') {
+          sh 'docker build -t ss69261/testing-image:latest .'
         }
       }
     }
