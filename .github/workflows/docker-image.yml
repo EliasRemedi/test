@@ -22,11 +22,6 @@ jobs:
       - name: build and push image
         uses: actions/checkout@v3
       - run: |
-          echo $KUBE_CONFIG_DATA
-          echo $DOCKERHUB_TOKEN
-          sudo apt install gettext
-          envsubst < config.py-example > config-def.py
-          cat config-def.py
           docker build -t test:latest .
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
           docker tag test autoscraping/test:latest
