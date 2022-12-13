@@ -1,37 +1,47 @@
-name: Docker Image CI
+name: pipeline
 
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  
+env:
+  DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+  IMAGE_NAME: ayi-githubactions:latest
 
 jobs:
+  
   build-and-push-docker-image:
     name: Build Docker image and push to repositories
     # run only when code is compiling and tests are passing
     runs-on: ubuntu-latest
-
     # steps to perform in job
     steps:
-      - name: Checkout code
+      - name: build and push image
         uses: actions/checkout@v3
-
-      # setup Docker buld action
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v3
-        with:
-          tag_with_ref: true
-          tag_with_sha: true
-          tags: test:latest
-          push: true
+      - run: |
+          echo $KUBE_CONFIG_DATA
+          echo $DOCKERHUB_TOKEN
+          sudo apt install gettext
+          envsubst < config.py-example > config-def.py
+          cat config-def.py
+          docker build -t test:latest .
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+          docker tag test autoscraping/test:latest
+          docker push autoscraping/test:latest
+          
+                 
+  deploy-to-cluster:
+    name: deploy to cluster
+    runs-on: ubuntu-latest
+    needs: build-and-push-docker-image
+    steps:
+    - name: deploy to cluster
+      uses: actions/checkout@v3
+    - uses: actions-hub/kubectl@master
+      env:
+        KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DATA }}
+      with:
+        args: apply -f cronjob.yaml
