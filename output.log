@@ -5,3 +5,7 @@
 2022-12-13 00:12:32,931 - INFO - 13/12/2022-00:12:32-----init crawler inna-mageplaza-----
 2022-12-13 00:13:07,353 - INFO - 13/12/2022-00:13:07-----init crawler inna-mageplaza-----
 2022-12-13 00:13:16,841 - INFO - 13/12/2022-00:13:16-----crawler ended successfully-----
+2022-12-13 13:59:34,088 - INFO - 13/12/2022-13:59:34-----init crawler-----
+2022-12-13 13:59:38,302 - INFO - 13/12/2022-13:59:38 la temperatura en diario panorama es 33º
+2022-12-13 13:59:39,761 - INFO - 13/12/2022-13:59:39-----saving in db-----
+2022-12-13 13:59:53,264 - ERROR - fallo crawler __init__() takes 1 positional argument but 2 were given

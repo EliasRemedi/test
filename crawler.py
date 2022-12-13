@@ -9,7 +9,6 @@ from datetime import datetime
 
 class Crawler:
     def __init__(self):
-        self.__proxy_socket = None
         self.__tools_obj = Tools()
         self.__ConfigDict = self.__tools_obj.ini('config.ini')
         self.__logger = Tools().get_logger("./")
@@ -29,8 +28,7 @@ class Crawler:
 
             #save in DB
             self.__logger.info(f"{datetime.now().strftime('%d/%m/%Y-%H:%M:%S')}-----saving in db-----")
-            print(self.__ConfigDict['db_connection'])
-            db = pymysql.connect(self.__ConfigDict['db_connection'])
+            db = pymysql.connect(host=self.__ConfigDict['db_host'], user=self.__ConfigDict['db_user'], password=self.__ConfigDict['db_password'], port=self.__ConfigDict['db_port'])
             cursor = db.cursor()
             cursor.execute(f'INSERT INTO test.test (text) values ("{date_weather}");')
             db.commit()
